@@ -22,4 +22,11 @@ class PageController extends AbstractController
             'controller_name' => 'PageController',
         ]);
     }
+    #[Route('/catalogue', name: 'app_catalogue')]
+    public function catalogue(): Response
+    {
+        return $this->render('page/catalogue.html.twig', [
+            'controller_name' => 'PageController',
+        ]);
+    }
 }
