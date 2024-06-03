@@ -1,0 +1,74 @@
+-- Create Database
+CREATE DATABASE VincentParrotDB;
+USE VincentParrotDB;
+
+-- Create Employee Table
+CREATE TABLE Employee (
+    employee_id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    address VARCHAR(255),
+    phone VARCHAR(15),
+    role VARCHAR(50)
+);
+
+-- Create Message Table
+CREATE TABLE Message (
+    message_id INT AUTO_INCREMENT PRIMARY KEY,
+    sender_id INT,
+    messageContent VARCHAR(255),
+    dateSent DATE,
+    messageStatus BOOLEAN,
+    FOREIGN KEY (sender_id) REFERENCES Employee(employee_id)
+);
+
+-- Create Service Table
+CREATE TABLE Service (
+    service_id INT AUTO_INCREMENT PRIMARY KEY,
+    serviceName VARCHAR(100),
+    serviceDescription VARCHAR(255),
+    serviceType VARCHAR(50),
+    serviceStatus BOOLEAN,
+    presenter_id INT,
+    FOREIGN KEY (presenter_id) REFERENCES Employee(employee_id)
+);
+
+-- Create Review Table
+CREATE TABLE Review (
+    review_id INT AUTO_INCREMENT PRIMARY KEY,
+    reviewContent VARCHAR(255),
+    dateSent DATE,
+    messageStatus BOOLEAN,
+    admin_id INT,
+    FOREIGN KEY (admin_id) REFERENCES Employee(employee_id)
+);
+
+-- Create Schedule Table
+CREATE TABLE Schedule (
+    schedule_id INT AUTO_INCREMENT PRIMARY KEY,
+    monday DATE,
+    tuesday DATE,
+    wednesday DATE,
+    thursday DATE,
+    friday DATE,
+    saturday DATE,
+    sunday DATE,
+    organiser_id INT,
+    FOREIGN KEY (organiser_id) REFERENCES Employee(employee_id)
+);
+
+-- Create CarAd Table
+CREATE TABLE CarAd (
+    car_id INT AUTO_INCREMENT PRIMARY KEY,
+    brand VARCHAR(50),
+    price INT,
+    gearbox VARCHAR(50),
+    energy VARCHAR(50),
+    fuel VARCHAR(50),
+    year DATE,
+    picture VARCHAR(255),
+    description VARCHAR(255),
+    mileage INT,
+    manager_id INT,
+    FOREIGN KEY (manager_id) REFERENCES Employee(employee_id)
+);
