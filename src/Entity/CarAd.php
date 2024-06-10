@@ -10,59 +10,46 @@ use Doctrine\ORM\Mapping as ORM;
 class CarAd
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
-    #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
+    #[ORM\Column(type: "integer", name: "car_id")]
     private ?int $car_id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $brand = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $price = null;
+    #[ORM\Column(type: "integer")]
+    private ?int $price = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 50)]
     private ?string $gearbox = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 50)]
     private ?string $energy = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 50)]
     private ?string $fuel = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $year = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $picture = null;
 
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $mileage = null;
+    #[ORM\Column(type: "integer")]
+    private ?int $mileage = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: "integer")]
     private ?int $manager_id = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getCarId(): ?int
     {
         return $this->car_id;
     }
 
-    public function setCarId(int $car_id): static
-    {
-        $this->car_id = $car_id;
-
-        return $this;
-    }
+    // Supprimez la méthode setCarId() car Doctrine gère la clé primaire auto-incrémentée
 
     public function getBrand(): ?string
     {
@@ -76,12 +63,12 @@ class CarAd
         return $this;
     }
 
-    public function getPrice(): ?string
+    public function getPrice(): ?int
     {
         return $this->price;
     }
 
-    public function setPrice(string $price): static
+    public function setPrice(int $price): static
     {
         $this->price = $price;
 
@@ -141,7 +128,7 @@ class CarAd
         return $this->picture;
     }
 
-    public function setPicture(string $picture): static
+    public function setPicture(?string $picture): static
     {
         $this->picture = $picture;
 
@@ -160,12 +147,12 @@ class CarAd
         return $this;
     }
 
-    public function getMileage(): ?string
+    public function getMileage(): ?int
     {
         return $this->mileage;
     }
 
-    public function setMileage(string $mileage): static
+    public function setMileage(int $mileage): static
     {
         $this->mileage = $mileage;
 

@@ -5,20 +5,19 @@ namespace App\Entity;
 use App\Repository\MessageRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\User;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
 class Message
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
-    #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
+    #[ORM\Column(type: "integer", name: "message_id")]
     private ?int $message_id = null;
 
-    #[ORM\Column]
-    private ?int $sender_id = null;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $sender = null;
 
     #[ORM\Column(length: 255)]
     private ?string $messageContent = null;
@@ -26,34 +25,22 @@ class Message
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateSent = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: "boolean")]
     private ?bool $messageStatus = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getMessageId(): ?int
     {
         return $this->message_id;
     }
 
-    public function setMessageId(int $message_id): static
+    public function getSender(): ?User
     {
-        $this->message_id = $message_id;
-
-        return $this;
+        return $this->sender;
     }
 
-    public function getSenderId(): ?int
+    public function setSender(User $sender): static
     {
-        return $this->sender_id;
-    }
-
-    public function setSenderId(int $sender_id): static
-    {
-        $this->sender_id = $sender_id;
+        $this->sender = $sender;
 
         return $this;
     }

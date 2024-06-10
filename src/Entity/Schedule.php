@@ -5,65 +5,54 @@ namespace App\Entity;
 use App\Repository\ScheduleRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\User;
 
 #[ORM\Entity(repositoryClass: ScheduleRepository::class)]
 class Schedule
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
-    #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
+    #[ORM\Column(type: "integer", name: "schedule_id")]
     private ?int $schedule_id = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $monday = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $tuesday = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $wednesday = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $thursday = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $friday = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $saturday = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $sunday = null;
 
-    #[ORM\Column]
-    private ?int $organiser_id = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $organiser = null;
 
     public function getScheduleId(): ?int
     {
         return $this->schedule_id;
     }
 
-    public function setScheduleId(int $schedule_id): static
-    {
-        $this->schedule_id = $schedule_id;
-
-        return $this;
-    }
+    // Supprimez la méthode setScheduleId() car Doctrine gère la clé primaire auto-incrémentée
 
     public function getMonday(): ?\DateTimeInterface
     {
         return $this->monday;
     }
 
-    public function setMonday(\DateTimeInterface $monday): static
+    public function setMonday(?\DateTimeInterface $monday): static
     {
         $this->monday = $monday;
 
@@ -75,7 +64,7 @@ class Schedule
         return $this->tuesday;
     }
 
-    public function setTuesday(\DateTimeInterface $tuesday): static
+    public function setTuesday(?\DateTimeInterface $tuesday): static
     {
         $this->tuesday = $tuesday;
 
@@ -87,7 +76,7 @@ class Schedule
         return $this->wednesday;
     }
 
-    public function setWednesday(\DateTimeInterface $wednesday): static
+    public function setWednesday(?\DateTimeInterface $wednesday): static
     {
         $this->wednesday = $wednesday;
 
@@ -99,7 +88,7 @@ class Schedule
         return $this->thursday;
     }
 
-    public function setThursday(\DateTimeInterface $thursday): static
+    public function setThursday(?\DateTimeInterface $thursday): static
     {
         $this->thursday = $thursday;
 
@@ -111,7 +100,7 @@ class Schedule
         return $this->friday;
     }
 
-    public function setFriday(\DateTimeInterface $friday): static
+    public function setFriday(?\DateTimeInterface $friday): static
     {
         $this->friday = $friday;
 
@@ -123,7 +112,7 @@ class Schedule
         return $this->saturday;
     }
 
-    public function setSaturday(\DateTimeInterface $saturday): static
+    public function setSaturday(?\DateTimeInterface $saturday): static
     {
         $this->saturday = $saturday;
 
@@ -135,21 +124,21 @@ class Schedule
         return $this->sunday;
     }
 
-    public function setSunday(\DateTimeInterface $sunday): static
+    public function setSunday(?\DateTimeInterface $sunday): static
     {
         $this->sunday = $sunday;
 
         return $this;
     }
 
-    public function getOrganiserId(): ?int
+    public function getOrganiser(): ?User
     {
-        return $this->organiser_id;
+        return $this->organiser;
     }
 
-    public function setOrganiserId(int $organiser_id): static
+    public function setOrganiser(User $organiser): static
     {
-        $this->organiser_id = $organiser_id;
+        $this->organiser = $organiser;
 
         return $this;
     }

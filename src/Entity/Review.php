@@ -5,16 +5,14 @@ namespace App\Entity;
 use App\Repository\ReviewRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\User; // Assumant que l'entité Admin est en fait User
 
 #[ORM\Entity(repositoryClass: ReviewRepository::class)]
 class Review
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
-    #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
+    #[ORM\Column(type: "integer", name: "review_id")]
     private ?int $review_id = null;
 
     #[ORM\Column(length: 255)]
@@ -23,28 +21,19 @@ class Review
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateSent = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: "boolean")]
     private ?bool $messageStatus = null;
 
-    #[ORM\Column]
-    private ?int $admin_id = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $admin = null;
 
     public function getReviewId(): ?int
     {
         return $this->review_id;
     }
 
-    public function setReviewId(int $review_id): static
-    {
-        $this->review_id = $review_id;
-
-        return $this;
-    }
+    // Supprimer la méthode setReviewId() car Doctrine gère la clé primaire auto-incrémentée
 
     public function getReviewContent(): ?string
     {
@@ -70,7 +59,7 @@ class Review
         return $this;
     }
 
-    public function isMessageStatus(): ?bool
+    public function getMessageStatus(): ?bool
     {
         return $this->messageStatus;
     }
@@ -82,14 +71,14 @@ class Review
         return $this;
     }
 
-    public function getAdminId(): ?int
+    public function getAdmin(): ?User
     {
-        return $this->admin_id;
+        return $this->admin;
     }
 
-    public function setAdminId(int $admin_id): static
+    public function setAdmin(User $admin): static
     {
-        $this->admin_id = $admin_id;
+        $this->admin = $admin;
 
         return $this;
     }

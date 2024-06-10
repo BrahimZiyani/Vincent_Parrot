@@ -9,11 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Service
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
-    #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
+    #[ORM\Column(type: "integer", name: "service_id")]
     private ?int $service_id = null;
 
     #[ORM\Column(length: 255)]
@@ -30,11 +27,6 @@ class Service
 
     #[ORM\Column]
     private ?int $presenter_id = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getServiceId(): ?int
     {
