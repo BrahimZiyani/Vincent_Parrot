@@ -2,12 +2,16 @@
 
 namespace App\Entity;
 
+use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity]
-class User
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "AUTO")]
@@ -17,11 +21,14 @@ class User
     #[ORM\Column(type: "string", length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(type: "string", length: 255)]
+    #[ORM\Column(type: "string", length: 255, unique: true)]
     private ?string $email = null;
 
     #[ORM\Column(type: "json")]
     private array $roles = [];
+
+    #[ORM\Column(type: "string")]
+    private ?string $password = null;
 
     #[ORM\OneToMany(mappedBy: "manager", targetEntity: CarAd::class)]
     private Collection $carAds;
@@ -54,7 +61,7 @@ class User
 
     public function setEmail(string $email): self
     {
-        $this->name = $email;
+        $this->email = $email;
         return $this;
     }
 
@@ -76,6 +83,17 @@ class User
     public function hasRole(string $role): bool
     {
         return in_array($role, $this->roles);
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+        return $this;
     }
 
     public function getCarAds(): Collection
@@ -103,5 +121,16 @@ class User
         }
 
         return $this;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 }
