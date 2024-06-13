@@ -10,7 +10,7 @@ class Service
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "AUTO")]
-    #[ORM\Column(type: "integer", name: "service_id")]
+    #[ORM\Column(type: "integer")]
     private ?int $service_id = null;
 
     #[ORM\Column(length: 255)]

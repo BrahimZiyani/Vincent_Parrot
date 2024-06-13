@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create new CarAd{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h1 class="text-center">Create new CarAd</h1>
+
+                {{ form_start(form, {'attr': {'class': 'mt-4'}}) }}
+                    <div class="form-group mb-3">
+                        {{ form_label(form.brand, null, {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.brand, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.brand) }}
+                    </div>
+                    
+                    <div class="form-group mb-3">
+                        {{ form_label(form.price, null, {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.price, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.price) }}
+                    </div>
+
+                    <div class="form-group mb-3">
+                        {{ form_label(form.gearbox, null, {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.gearbox, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.gearbox) }}
+                    </div>
+
+                    <div class="form-group mb-3">
+                        {{ form_label(form.energy, null, {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.energy, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.energy) }}
+                    </div>
+
+                    <div class="form-group mb-3">
+                        {{ form_label(form.fuel, null, {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.fuel, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.fuel) }}
+                    </div>
+
+                    <div class="form-group mb-3">
+                        {{ form_label(form.year, null, {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.year, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.year) }}
+                    </div>
+
+                    <div class="form-group mb-3">
+                        {{ form_label(form.picture, null, {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.picture, {'attr': {'class': 'form-control-file'}}) }}
+                        {{ form_errors(form.picture) }}
+                    </div>
+
+                    <div class="form-group mb-3">
+                        {{ form_label(form.description, null, {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': 10}}) }}
+                        {{ form_errors(form.description) }}
+                    </div>
+
+                    <div class="form-group mb-3">
+                        {{ form_label(form.mileage, null, {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.mileage, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.mileage) }}
+                    </div>
+
+                    <button class="btn btn-primary w-100">{{ button_label|default('Save') }}</button>
+                {{ form_end(form) }}
+
+                <div class="mt-3">
+                    <a href="{{ path('car_ad_index') }}" class="btn btn-secondary w-100">Back to list</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

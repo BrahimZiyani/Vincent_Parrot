@@ -29,8 +29,8 @@ class CarAd
     #[ORM\Column(length: 50)]
     private ?string $fuel = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $year = null;
+    #[ORM\Column(length: 4)]
+    private ?string $year = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $picture = null;
@@ -38,18 +38,17 @@ class CarAd
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\Column(type: "integer")]
-    private ?int $mileage = null;
+    #[ORM\Column(length: 50)]
+    private ?string $mileage = null;
 
-    #[ORM\Column(type: "integer")]
-    private ?int $manager_id = null;
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'carAds')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?User $manager = null;
 
     public function getCarId(): ?int
     {
         return $this->car_id;
     }
-
-    // Supprimez la méthode setCarId() car Doctrine gère la clé primaire auto-incrémentée
 
     public function getBrand(): ?string
     {
@@ -111,12 +110,12 @@ class CarAd
         return $this;
     }
 
-    public function getYear(): ?\DateTimeInterface
+    public function getYear(): ?string
     {
         return $this->year;
     }
 
-    public function setYear(\DateTimeInterface $year): static
+    public function setYear(string $year): static
     {
         $this->year = $year;
 
@@ -147,27 +146,29 @@ class CarAd
         return $this;
     }
 
-    public function getMileage(): ?int
+    public function getMileage(): ?string
     {
         return $this->mileage;
     }
 
-    public function setMileage(int $mileage): static
+    public function setMileage(string $mileage): static
     {
         $this->mileage = $mileage;
 
         return $this;
     }
 
-    public function getManagerId(): ?int
+    public function getManager(): ?User
     {
-        return $this->manager_id;
+        return $this->manager;
     }
 
-    public function setManagerId(int $manager_id): static
+    public function setManager(?User $manager): static
     {
-        $this->manager_id = $manager_id;
-
+        if ($manager && !$manager->hasRole('ROLE_MANAGER')) {
+            throw new \InvalidArgumentException('The assigned user must have the role MANAGER.');
+        }
+        $this->manager = $manager;
         return $this;
     }
 }
