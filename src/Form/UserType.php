@@ -1,9 +1,12 @@
 <?php
 
+// src/Form/UserType.php
+
 namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -24,9 +27,14 @@ class UserType extends AbstractType
             ->add('password', PasswordType::class, [
                 'label' => 'Password',
             ])
-            ->add('roles', TextType::class, [
-                'label' => 'Roles (comma-separated, e.g., ROLE_ADMIN,ROLE_USER)',
-                'mapped' => false,
+            ->add('roles', ChoiceType::class, [
+                'label' => 'Roles',
+                'choices' => [
+                    'Admin' => 'ROLE_ADMIN',
+                    'User' => 'ROLE_USER',
+                ],
+                'multiple' => true,
+                'expanded' => true,
             ]);
     }
 
@@ -37,3 +45,4 @@ class UserType extends AbstractType
         ]);
     }
 }
+
