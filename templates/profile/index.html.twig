@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+    <h1>Profile</h1>
+
+    <ul class="list-group">
+        <li class="list-group-item"><strong>Name:</strong> {{ user.name }}</li>
+        <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
+        <li class="list-group-item"><strong>Roles:</strong> {{ user.roles|join(', ') }}</li>
+    </ul>
+{% endblock %}

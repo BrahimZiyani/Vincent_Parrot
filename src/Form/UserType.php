@@ -1,7 +1,5 @@
 <?php
 
-// src/Form/UserType.php
-
 namespace App\Form;
 
 use App\Entity\User;
@@ -31,6 +29,7 @@ class UserType extends AbstractType
                 'label' => 'Roles',
                 'choices' => [
                     'Admin' => 'ROLE_ADMIN',
+                    'Manager' => 'ROLE_MANAGER',
                     'User' => 'ROLE_USER',
                 ],
                 'multiple' => true,
@@ -45,4 +44,3 @@ class UserType extends AbstractType
         ]);
     }
 }
-

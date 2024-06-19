@@ -22,15 +22,26 @@
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><a href="{{ path('app_home') }}" class="nav-link px-2 link-secondary">Home</a></li>
-            <li><a href="{{ path('app_features') }}" class="nav-link px-2 link-dark">Features</a></li>
-            <li><a href="{{ path('app_pricing') }}" class="nav-link px-2 link-dark">Pricing</a></li>
-            <li><a href="{{ path('app_faqs') }}" class="nav-link px-2 link-dark">FAQs</a></li>
+            <li><a href="" class="nav-link px-2 link-dark">Features</a></li>
+            <li><a href="" class="nav-link px-2 link-dark">Pricing</a></li>
+            <li><a href="" class="nav-link px-2 link-dark">FAQs</a></li>
             <li><a href="{{ path('app_about') }}" class="nav-link px-2 link-dark">About</a></li>
         </ul>
 
         <div class="col-md-3 text-end">
-            <a href="{{ path('app_login') }}" class="btn btn-outline-primary me-2">Login</a>
-            <a href="{{ path('app_signup') }}" class="btn btn-primary">Sign-up</a>
+            {% if app.user %}
+                <a href="{{ path('app_profile') }}" class="btn btn-outline-primary me-2">Profile</a>
+                <a href="{{ path('app_logout') }}" class="btn btn-primary">Logout</a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('user_index') }}" class="btn btn-secondary">Users</a>
+                {% endif %}
+                {% if is_granted('ROLE_MANAGER') or is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('car_ad_index') }}" class="btn btn-secondary">Car Sales</a>
+                {% endif %}
+            {% else %}
+                <a href="{{ path('app_login') }}" class="btn btn-outline-primary me-2">Login</a>
+                <a href="{{ path('app_signup') }}" class="btn btn-primary">Sign-up</a>
+            {% endif %}
         </div>
         </header>
         </div>   
@@ -48,7 +59,7 @@
             <li class="nav-item"><a href="{{ path('app_faqs') }}" class="nav-link px-2 text-muted">FAQs</a></li>
             <li class="nav-item"><a href="{{ path('app_about') }}" class="nav-link px-2 text-muted">About</a></li>
             </ul>
-            <p class="text-center text-muted">© 2021 Company, Inc</p>
+            <p class="text-center text-muted">© 2024 Vincent Parrot Garage</p>
         </footer>
         </div>
     </body>
