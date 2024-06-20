@@ -20,7 +20,16 @@ class CarAdType extends AbstractType
     {
         $builder
             ->add('brand', TextType::class)
-            ->add('price', NumberType::class)
+            ->add('price', NumberType::class, [
+                'scale' => 2,
+                'html5' => true,
+                'attr' => [
+                    'pattern' => '[0-9 ]*',
+                    'inputmode' => 'numeric',
+                    'class' => 'form-control',
+                    'placeholder' => '55 000',
+                ],
+            ])
             ->add('gearbox', TextType::class)
             ->add('energy', TextType::class)
             ->add('fuel', TextType::class)
@@ -31,7 +40,7 @@ class CarAdType extends AbstractType
                 'required' => false,
             ])
             ->add('description', TextareaType::class)
-            ->add('mileage', TextareaType::class)
+            ->add('mileage', NumberType::class)
             ->add('manager', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'name',

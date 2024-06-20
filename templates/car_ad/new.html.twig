@@ -10,10 +10,10 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h2 class="card-title mb-0">New Car Information</h2>
+                        <h2 class="card-title mb-0">Car Information</h2>
                     </div>
                     <div class="card-body">
-                        {{ form_start(form) }}
+                        {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
                             <div class="mb-3">
                                 {{ form_label(form.brand) }}
                                 {{ form_widget(form.brand, { 'attr': {'class': 'form-control'} }) }}

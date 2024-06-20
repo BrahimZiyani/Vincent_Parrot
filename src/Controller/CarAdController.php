@@ -7,9 +7,11 @@ use App\Form\CarAdType;
 use App\Repository\CarAdRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/car_ad')]
 class CarAdController extends AbstractController
@@ -23,13 +25,31 @@ class CarAdController extends AbstractController
     }
 
     #[Route('/new', name: 'car_ad_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $carAd = new CarAd();
         $form = $this->createForm(CarAdType::class, $carAd);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('picture')->getData();
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('pictures_directory'),
+                        $newFilename
+                    );
+                    $carAd->setPicture($newFilename);
+                } catch (FileException $e) {
+                    // handle exception if something happens during file upload
+                    return new Response('File upload failed: ' . $e->getMessage());
+                }
+            }
+
             $entityManager->persist($carAd);
             $entityManager->flush();
 
@@ -42,7 +62,7 @@ class CarAdController extends AbstractController
         ]);
     }
 
-    #[Route('/{car_id}', name: 'car_ad_show', methods: ['GET'])]
+    #[Route('/{carId}', name: 'car_ad_show', methods: ['GET'])]
     public function show(CarAd $carAd): Response
     {
         return $this->render('car_ad/show.html.twig', [
@@ -50,13 +70,31 @@ class CarAdController extends AbstractController
         ]);
     }
 
-    #[Route('/{car_id}/edit', name: 'car_ad_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, CarAd $carAd, EntityManagerInterface $entityManager): Response
+    #[Route('/{carId}/edit', name: 'car_ad_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, CarAd $carAd, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(CarAdType::class, $carAd);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('picture')->getData();
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('pictures_directory'),
+                        $newFilename
+                    );
+                    $carAd->setPicture($newFilename);
+                } catch (FileException $e) {
+                    // handle exception if something happens during file upload
+                    return new Response('File upload failed: ' . $e->getMessage());
+                }
+            }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('car_ad_index');
@@ -68,7 +106,7 @@ class CarAdController extends AbstractController
         ]);
     }
 
-    #[Route('/{car_id}', name: 'car_ad_delete', methods: ['POST'])]
+    #[Route('/{carId}', name: 'car_ad_delete', methods: ['POST'])]
     public function delete(Request $request, CarAd $carAd, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$carAd->getCarId(), $request->request->get('_token'))) {

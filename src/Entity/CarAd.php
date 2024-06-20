@@ -2,52 +2,50 @@
 
 namespace App\Entity;
 
-use App\Repository\CarAdRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CarAdRepository;
 
 #[ORM\Entity(repositoryClass: CarAdRepository::class)]
 class CarAd
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: "AUTO")]
-    #[ORM\Column(type: "integer", name: "car_id")]
-    private ?int $car_id = null;
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer")]
+    private ?int $carId = null;
 
     #[ORM\Column(length: 255)]
     private ?string $brand = null;
 
-    #[ORM\Column(type: "integer")]
-    private ?int $price = null;
+    #[ORM\Column(type: "float")]
+    private ?float $price = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 255)]
     private ?string $gearbox = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 255)]
     private ?string $energy = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 255)]
     private ?string $fuel = null;
 
-    #[ORM\Column(length: 4)]
+    #[ORM\Column(length: 255)]
     private ?string $year = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $picture = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: "text")]
     private ?string $description = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $mileage = null;
+    #[ORM\Column(type: "integer")]
+    private ?int $mileage = null;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'carAds')]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     private ?User $manager = null;
 
-    public function getCarId(): ?int
+    public function getcarId(): ?int
     {
-        return $this->car_id;
+        return $this->carId;
     }
 
     public function getBrand(): ?string
@@ -55,19 +53,19 @@ class CarAd
         return $this->brand;
     }
 
-    public function setBrand(string $brand): static
+    public function setBrand(string $brand): self
     {
         $this->brand = $brand;
 
         return $this;
     }
 
-    public function getPrice(): ?int
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    public function setPrice(int $price): static
+    public function setPrice(float $price): self
     {
         $this->price = $price;
 
@@ -79,7 +77,7 @@ class CarAd
         return $this->gearbox;
     }
 
-    public function setGearbox(string $gearbox): static
+    public function setGearbox(string $gearbox): self
     {
         $this->gearbox = $gearbox;
 
@@ -91,7 +89,7 @@ class CarAd
         return $this->energy;
     }
 
-    public function setEnergy(string $energy): static
+    public function setEnergy(string $energy): self
     {
         $this->energy = $energy;
 
@@ -103,7 +101,7 @@ class CarAd
         return $this->fuel;
     }
 
-    public function setFuel(string $fuel): static
+    public function setFuel(string $fuel): self
     {
         $this->fuel = $fuel;
 
@@ -115,7 +113,7 @@ class CarAd
         return $this->year;
     }
 
-    public function setYear(string $year): static
+    public function setYear(string $year): self
     {
         $this->year = $year;
 
@@ -127,7 +125,7 @@ class CarAd
         return $this->picture;
     }
 
-    public function setPicture(?string $picture): static
+    public function setPicture(?string $picture): self
     {
         $this->picture = $picture;
 
@@ -139,19 +137,19 @@ class CarAd
         return $this->description;
     }
 
-    public function setDescription(string $description): static
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 
         return $this;
     }
 
-    public function getMileage(): ?string
+    public function getMileage(): ?int
     {
         return $this->mileage;
     }
 
-    public function setMileage(string $mileage): static
+    public function setMileage(int $mileage): self
     {
         $this->mileage = $mileage;
 
@@ -163,12 +161,10 @@ class CarAd
         return $this->manager;
     }
 
-    public function setManager(?User $manager): static
+    public function setManager(?User $manager): self
     {
-        if ($manager && !$manager->hasRole('ROLE_MANAGER')) {
-            throw new \InvalidArgumentException('The assigned user must have the role MANAGER.');
-        }
         $this->manager = $manager;
+
         return $this;
     }
 }
