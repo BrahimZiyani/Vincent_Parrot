@@ -27,3 +27,4 @@ security:
         - { path: ^/car_ad/edit, roles: [ROLE_MANAGER, ROLE_ADMIN] }
         - { path: ^/admin/user, roles: ROLE_ADMIN }
         - { path: ^/admin, roles: ROLE_ADMIN }
+

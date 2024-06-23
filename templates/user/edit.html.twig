@@ -1,3 +1,5 @@
+{# templates/user/edit.html.twig #}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Edit User{% endblock %}
@@ -9,9 +11,6 @@
                 <h1 class="text-center mb-4">Edit User</h1>
 
                 <div class="card">
-                    <div class="card-header">
-                        <h2 class="card-title mb-0">Edit User Information</h2>
-                    </div>
                     <div class="card-body">
                         {{ form_start(form) }}
                             <div class="mb-3">
@@ -25,25 +24,28 @@
                                 {{ form_errors(form.email) }}
                             </div>
                             <div class="mb-3">
-                                {{ form_label(form.password) }}
-                                {{ form_widget(form.password, { 'attr': {'class': 'form-control'} }) }}
-                                {{ form_errors(form.password) }}
+                                {{ form_label(form.phoneNumber) }}
+                                {{ form_widget(form.phoneNumber, { 'attr': {'class': 'form-control'} }) }}
+                                {{ form_errors(form.phoneNumber) }}
+                            </div>
+                            <div class="mb-3">
+                                {{ form_label(form.plainPassword.first) }}
+                                {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control'} }) }}
+                                {{ form_errors(form.plainPassword.first) }}
+                            </div>
+                            <div class="mb-3">
+                                {{ form_label(form.plainPassword.second) }}
+                                {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control'} }) }}
+                                {{ form_errors(form.plainPassword.second) }}
                             </div>
                             <div class="mb-3">
                                 {{ form_label(form.roles) }}
-                                <div>
-                                    {% for role in form.roles %}
-                                        <div class="form-check">
-                                            {{ form_widget(role, { 'attr': {'class': 'form-check-input'} }) }}
-                                            {{ form_label(role, null, { 'attr': {'class': 'form-check-label'} }) }}
-                                        </div>
-                                    {% endfor %}
-                                </div>
+                                {{ form_widget(form.roles, { 'attr': {'class': 'form-check'} }) }}
                                 {{ form_errors(form.roles) }}
                             </div>
                             <div class="d-flex justify-content-between">
                                 <a href="{{ path('user_index') }}" class="btn btn-secondary">Back to list</a>
-                                <button type="submit" class="btn btn-primary">Update</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
                             </div>
                         {{ form_end(form) }}
                     </div>

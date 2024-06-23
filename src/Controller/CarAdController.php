@@ -45,7 +45,6 @@ class CarAdController extends AbstractController
                     );
                     $carAd->setPicture($newFilename);
                 } catch (FileException $e) {
-                    // handle exception if something happens during file upload
                     return new Response('File upload failed: ' . $e->getMessage());
                 }
             }
@@ -90,7 +89,6 @@ class CarAdController extends AbstractController
                     );
                     $carAd->setPicture($newFilename);
                 } catch (FileException $e) {
-                    // handle exception if something happens during file upload
                     return new Response('File upload failed: ' . $e->getMessage());
                 }
             }

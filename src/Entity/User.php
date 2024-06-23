@@ -30,8 +30,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: "string")]
     private ?string $password = null;
 
+    #[ORM\Column(type: "string", length: 20, nullable: true)]
+    private ?string $phoneNumber = null;
+
     #[ORM\OneToMany(mappedBy: "manager", targetEntity: CarAd::class)]
     private Collection $carAds;
+
+    // Champ plainPassword non mappé
+    private ?string $plainPassword = null;
 
     public function __construct()
     {
@@ -68,7 +74,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-        return array_unique($this->roles);
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
     }
 
     public function setRoles(array $roles): self
@@ -79,7 +88,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function hasRole(string $role): bool
     {
-        return in_array($role, $this->roles, true);
+        return in_array($role, $this->roles);
     }
 
     public function getPassword(): string
@@ -90,6 +99,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(?string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
+        return $this;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
         return $this;
     }
 
@@ -111,7 +142,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeCarAd(CarAd $carAd): self
     {
         if ($this->carAds->removeElement($carAd)) {
-            // set the owning side to null (unless already changed)
             if ($carAd->getManager() === $this) {
                 $carAd->setManager(null);
             }
@@ -128,6 +158,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
     }
 }

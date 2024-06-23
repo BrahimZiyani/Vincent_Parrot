@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos Services - Garage Vincent Parrot{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Nos Services</h1>
+
+        <section class="mb-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="{{ asset('images/reparations.jpg') }}" class="img-fluid rounded" alt="Entretien et Réparations">
+                </div>
+                <div class="col-md-6">
+                    <h2>Entretien et Réparations</h2>
+                    <p>
+                        Nous offrons une gamme complète de services d'entretien et de réparations pour maintenir votre véhicule en parfait état. De la vidange d'huile aux réparations de moteur, nos techniciens qualifiés sont prêts à prendre soin de votre voiture.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-5">
+
+        <section class="mb-5">
+            <div class="row">
+                <div class="col-md-6 order-md-2">
+                    <img src="{{ asset('images/ventes.jpg') }}" class="img-fluid rounded" alt="Vente de Véhicules">
+                </div>
+                <div class="col-md-6 order-md-1">
+                    <h2>Vente de Véhicules</h2>
+                    <p>
+                        Que vous cherchiez un véhicule neuf ou d'occasion, nous avons une large sélection de voitures pour répondre à vos besoins. Notre équipe de vente est à votre disposition pour vous aider à trouver la voiture parfaite.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-5">
+
+        <section class="mb-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="{{ asset('images/diagnostic.jpg') }}" class="img-fluid rounded" alt="Diagnostic et Inspection">
+                </div>
+                <div class="col-md-6">
+                    <h2>Diagnostic et Inspection</h2>
+                    <p>
+                        Nos services de diagnostic et d'inspection utilisent les dernières technologies pour identifier et résoudre les problèmes de votre véhicule rapidement et efficacement. Faites confiance à nos experts pour un diagnostic précis.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-5">
+
+        <section class="mb-5">
+            <div class="row">
+                <div class="col-md-6 order-md-2">
+                    <img src="{{ asset('images/personalisation.jpeg') }}" class="img-fluid rounded" alt="Personnalisation de Véhicules">
+                </div>
+                <div class="col-md-6 order-md-1">
+                    <h2>Personnalisation de Véhicules</h2>
+                    <p>
+                        Donnez à votre voiture une touche unique avec nos services de personnalisation. Que ce soit pour un nouveau look extérieur ou des modifications de performance, nous avons les compétences pour transformer votre véhicule selon vos désirs.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

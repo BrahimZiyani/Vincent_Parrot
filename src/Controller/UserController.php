@@ -25,8 +25,25 @@ class UserController extends AbstractController
     #[Route('/', name: 'user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
+        $users = $userRepository->findAll();
+
+        // Trier les utilisateurs par rôle
+        usort($users, function ($a, $b) {
+            $rolePriority = ['ROLE_ADMIN' => 1, 'ROLE_MANAGER' => 2, 'ROLE_USER' => 3];
+
+            $aRole = min(array_map(function ($role) use ($rolePriority) {
+                return $rolePriority[$role] ?? 4; // Utiliser une valeur par défaut pour les rôles non définis
+            }, $a->getRoles()));
+
+            $bRole = min(array_map(function ($role) use ($rolePriority) {
+                return $rolePriority[$role] ?? 4;
+            }, $b->getRoles()));
+
+            return $aRole <=> $bRole;
+        });
+
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $users,
         ]);
     }
 
@@ -39,8 +56,10 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Hacher le mot de passe avant de persister l'utilisateur
-            $hashedPassword = $this->passwordHasher->hashPassword($user, $user->getPassword());
-            $user->setPassword($hashedPassword);
+            if ($plainPassword = $form->get('plainPassword')->getData()) {
+                $hashedPassword = $this->passwordHasher->hashPassword($user, $plainPassword);
+                $user->setPassword($hashedPassword);
+            }
 
             $entityManager->persist($user);
             $entityManager->flush();
@@ -62,8 +81,10 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Hacher le mot de passe avant de persister l'utilisateur
-            $hashedPassword = $this->passwordHasher->hashPassword($user, $user->getPassword());
-            $user->setPassword($hashedPassword);
+            if ($plainPassword = $form->get('plainPassword')->getData()) {
+                $hashedPassword = $this->passwordHasher->hashPassword($user, $plainPassword);
+                $user->setPassword($hashedPassword);
+            }
 
             $entityManager->flush();
 

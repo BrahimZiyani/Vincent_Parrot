@@ -1,20 +1,80 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Vincent Parrot{% endblock %}
+{% block title %}À propos de nous - Garage Vincent Parrot{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">À propos de nous</h1>
 
-<div class="example-wrapper">
-    <h1>A propos de nous</h1>
+        <section class="mb-5">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h2>Notre Histoire</h2>
+                    <p>
+                        Le Garage Vincent Parrot a été fondé en 1990 par Vincent Parrot avec une vision claire : offrir des services automobiles de qualité supérieure à nos clients. Depuis plus de 30 ans, nous avons bâti une réputation solide basée sur la confiance, l'expertise et la satisfaction du client.
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <img src="{{ asset('images/garage.jpg') }}" class="img-fluid rounded" alt="Garage Vincent Parrot">
+                </div>
+            </div>
+        </section>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>D:/Xampp/htdocs/Vincent_Parrot/src/Controller/PageController.php</code></li>
-        <li>Your template at <code>D:/Xampp/htdocs/Vincent_Parrot/templates/page/index.html.twig</code></li>
-    </ul>
-</div>
+        <hr class="my-5">
+
+        <section class="mb-5">
+            <div class="row align-items-center">
+                <div class="col-md-6 order-md-2">
+                    <h2>Nos Services</h2>
+                    <p>
+                        Nous proposons une large gamme de services pour répondre à tous vos besoins automobiles :
+                    </p>
+                    <ul>
+                        <li>Entretien et réparations</li>
+                        <li>Vente de véhicules neufs et d'occasion</li>
+                        <li>Diagnostic et inspection</li>
+                        <li>Personnalisation de véhicules</li>
+                    </ul>
+                </div>
+                <div class="col-md-6 order-md-1">
+                    <img src="{{ asset('images/mechaniciens.jpeg') }}" class="img-fluid rounded" alt="Nos Services">
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-5">
+
+        <section class="mb-5">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h2>Notre Équipe</h2>
+                    <p>
+                        Notre équipe est composée de professionnels passionnés et expérimentés, dédiés à fournir le meilleur service possible. Chaque membre de notre équipe apporte une expertise unique et un engagement envers l'excellence.
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <img src="{{ asset('images/equipe.jpg') }}" class="img-fluid rounded" alt="Notre Équipe">
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-5">
+
+        <section class="text-center mb-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <h2>Nos Valeurs</h2>
+                    <p>
+                        Au Garage Vincent Parrot, nous croyons en :
+                    </p>
+                    <ul class="list-unstyled">
+                        <li><strong>Intégrité :</strong> Nous faisons toujours ce qui est juste pour nos clients.</li>
+                        <li><strong>Qualité :</strong> Nous nous efforçons de fournir des services de la plus haute qualité.</li>
+                        <li><strong>Passion :</strong> Nous aimons ce que nous faisons et cela se reflète dans notre travail.</li>
+                        <li><strong>Innovation :</strong> Nous restons à la pointe des dernières technologies et techniques.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
 {% endblock %}

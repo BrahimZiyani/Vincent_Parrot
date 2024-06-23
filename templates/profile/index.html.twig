@@ -1,13 +1,32 @@
+{# templates/profile/index.html.twig #}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Profile{% endblock %}
 
 {% block body %}
-    <h1>Profile</h1>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Profile</h1>
 
-    <ul class="list-group">
-        <li class="list-group-item"><strong>Name:</strong> {{ user.name }}</li>
-        <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
-        <li class="list-group-item"><strong>Roles:</strong> {{ user.roles|join(', ') }}</li>
-    </ul>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Numéro de téléphone</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.phoneNumber }}</td>
+                    <td>
+                        <a href="{{ path('app_profile_edit') }}" class="btn btn-primary btn-sm">Modifier</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
