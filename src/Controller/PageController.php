@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\CarAdRepository;
+use App\Entity\CarAd;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -45,6 +46,14 @@ class PageController extends AbstractController
     {
         return $this->render('page/car_ad_list.html.twig', [
             'car_ads' => $carAdRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/{carId}', name: 'car_ad_show', methods: ['GET'])]
+    public function show(CarAd $carAd): Response
+    {
+        return $this->render('page/show.html.twig', [
+            'car_ad' => $carAd,
         ]);
     }
 }

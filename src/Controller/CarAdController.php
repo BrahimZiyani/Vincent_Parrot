@@ -61,14 +61,6 @@ class CarAdController extends AbstractController
         ]);
     }
 
-    #[Route('/{carId}', name: 'car_ad_show', methods: ['GET'])]
-    public function show(CarAd $carAd): Response
-    {
-        return $this->render('car_ad/show.html.twig', [
-            'car_ad' => $carAd,
-        ]);
-    }
-
     #[Route('/{carId}/edit', name: 'car_ad_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, CarAd $carAd, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
