@@ -11,7 +11,7 @@
             {% for car_ad in car_ads %}
                 <div class="col">
                     <div class="card h-100">
-                        <a href="{{ path('car_ad_show', {'car_id': car_ad.getCarId()}) }}" class="stretched-link">
+                        <a href="{{ path('car_ad_show', {'carId': car_ad.getCarId()}) }}" class="stretched-link">
                             {% if car_ad.picture %}
                                 <img src="{{ asset('uploads/' ~ car_ad.picture) }}" class="card-img-top" alt="{{ car_ad.brand }}" style="width: 100%; height: 250px; object-fit: cover;">
                             {% else %}

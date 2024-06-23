@@ -40,11 +40,9 @@ class PageController extends AbstractController
         return $this->render('security/signup.html.twig');
     }
 
-    #[Route('/voitures', name: 'car_ad_list', methods: ['GET'])]
-    public function list(CarAdRepository $carAdRepository, LoggerInterface $logger): Response
+    #[Route('/voitures', name: 'app_voitures')]
+    public function voitures(CarAdRepository $carAdRepository): Response
     {
-        $user = $this->getUser();
-        $logger->info('Accessing /voitures as: ', ['user' => $user, 'roles' => $user ? $user->getRoles() : 'anonymous']);
         return $this->render('page/car_ad_list.html.twig', [
             'car_ads' => $carAdRepository->findAll(),
         ]);
