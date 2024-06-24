@@ -10,8 +10,9 @@ Encore
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
     .enableReactPreset() // Enable React preset
-    .configureBabel((config) => {
-        config.presets.push('@babel/preset-react'); // Add React preset
+    .enableSassLoader() // Enable Sass loader
+    .addAliases({
+        '@symfony/stimulus-bridge/controllers.json': './assets/controllers/controllers.json'
     })
 ;
 
