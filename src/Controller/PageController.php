@@ -5,9 +5,9 @@ namespace App\Controller;
 use App\Repository\CarAdRepository;
 use App\Entity\CarAd;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Psr\Log\LoggerInterface;
 
 class PageController extends AbstractController
 {
@@ -47,6 +47,47 @@ class PageController extends AbstractController
         return $this->render('page/car_ad_list.html.twig', [
             'car_ads' => $carAdRepository->findAll(),
         ]);
+    }
+
+    #[Route('/api/voitures', name: 'api_voitures', methods: ['GET'])]
+    public function apiVoitures(CarAdRepository $carAdRepository): JsonResponse
+    {
+        $brand = $_GET['brand'] ?? null;
+        $mileage = $_GET['mileage'] ?? null;
+        $price = $_GET['price'] ?? null;
+
+        $queryBuilder = $carAdRepository->createQueryBuilder('car');
+
+        if ($brand) {
+            $queryBuilder->andWhere('car.brand LIKE :brand')
+                ->setParameter('brand', '%' . $brand . '%');
+        }
+
+        if ($mileage) {
+            $queryBuilder->andWhere('car.mileage <= :mileage')
+                ->setParameter('mileage', $mileage);
+        }
+
+        if ($price) {
+            $queryBuilder->andWhere('car.price <= :price')
+                ->setParameter('price', $price);
+        }
+
+        $carAds = $queryBuilder->getQuery()->getResult();
+
+        $data = array_map(function (CarAd $carAd) {
+            return [
+                'carId' => $carAd->getCarId(),
+                'brand' => $carAd->getBrand(),
+                'price' => $carAd->getPrice(),
+                'year' => $carAd->getYear(),
+                'mileage' => $carAd->getMileage(),
+                'picture' => $carAd->getPicture(),
+                'manager' => $carAd->getManager() ? $carAd->getManager()->getName() : null,
+            ];
+        }, $carAds);
+
+        return new JsonResponse($data);
     }
 
     #[Route('/{carId}', name: 'car_ad_show', methods: ['GET'])]
