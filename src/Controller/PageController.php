@@ -49,6 +49,14 @@ class PageController extends AbstractController
         ]);
     }
 
+    #[Route('/voiture/{carId}', name: 'car_ad_show', methods: ['GET'])]
+    public function show(CarAd $carAd): Response
+    {
+        return $this->render('page/show.html.twig', [
+            'car_ad' => $carAd,
+        ]);
+    }
+
     #[Route('/api/voitures', name: 'api_voitures', methods: ['GET'])]
     public function apiVoitures(CarAdRepository $carAdRepository): JsonResponse
     {
@@ -88,13 +96,5 @@ class PageController extends AbstractController
         }, $carAds);
 
         return new JsonResponse($data);
-    }
-
-    #[Route('/{carId}', name: 'car_ad_show', methods: ['GET'])]
-    public function show(CarAd $carAd): Response
-    {
-        return $this->render('page/show.html.twig', [
-            'car_ad' => $carAd,
-        ]);
     }
 }
