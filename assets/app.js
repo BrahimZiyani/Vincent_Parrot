@@ -1,9 +1,6 @@
-import './bootstrap.js';
+
 // Import the Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-// Import the Stimulus bootstrap file
-import './bootstrap.js';
 
 // Your other JavaScript or CSS imports
 import './styles/app.scss';  // Adjust this if you're using a different main CSS file

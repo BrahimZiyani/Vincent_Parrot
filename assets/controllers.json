@@ -1,4 +1,8 @@
 {
-    "controllers": [],
+    "controllers": {
+        "@symfony/ux-dropzone": {
+            "controller": "@symfony/ux-dropzone/dropzone_controller.js"
+        }
+    },
     "entrypoints": []
 }

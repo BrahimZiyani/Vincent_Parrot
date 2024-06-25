@@ -11,9 +11,6 @@ Encore
     .enableVersioning(Encore.isProduction())
     .enableReactPreset() // Enable React preset
     .enableSassLoader() // Enable Sass loader
-    .addAliases({
-        '@symfony/stimulus-bridge/controllers.json': './assets/controllers/controllers.json'
-    })
 ;
 
 module.exports = Encore.getWebpackConfig();
